@@ -14,9 +14,11 @@
  */
 (function () {
   var APP = 'https://devso3939.github.io/Blue-Ocean/';
-  var path = location.pathname.replace(/^\/+/, '');
-  if (/^admin\/?$/i.test(path)) {
-    location.replace(APP + 'admin/' + location.search + location.hash);
+  // v6.9.122: no trailing slash on /admin — a trailing one makes the app's
+  // 404 fallback compute the wrong base (admin/index.html does not exist).
+  var path = location.pathname.replace(/^\/+/, '').replace(/\/+$/, '');
+  if (/^admin$/i.test(path)) {
+    location.replace(APP + 'admin' + location.search + location.hash);
   } else {
     location.replace(APP + (location.hash || ''));
   }
