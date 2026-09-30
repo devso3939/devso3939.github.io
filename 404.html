@@ -4,11 +4,22 @@
 <meta charset="utf-8">
 <title>Blue Ocean — redirecting…</title>
 <script>
-/* Same forwarder as index.html (no replaceState — see its comment), for any
- * missed deep path on the bare root. */
+/*
+ * Bare-root forwarder for the Blue Ocean user site (devso3939.github.io).
+ *
+ * Auth email links that were baked with a bare-root redirect land HERE with
+ * the session in #hash — forwarded intact to the app. Deep links like
+ * /admin are routed to the app's admin console path. (No replaceState:
+ * rewriting the URL first turns location.replace into a same-doc no-op.)
+ */
 (function () {
   var APP = 'https://devso3939.github.io/Blue-Ocean/';
-  location.replace(APP + (location.hash || ''));
+  var path = location.pathname.replace(/^\/+/, '');
+  if (/^admin\/?$/i.test(path)) {
+    location.replace(APP + 'admin/' + location.search + location.hash);
+  } else {
+    location.replace(APP + (location.hash || ''));
+  }
 })();
 </script>
 <noscript><meta http-equiv="refresh" content="0; url=https://devso3939.github.io/Blue-Ocean/"></noscript>
