@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Blue Ocean — redirecting…</title>
+<link rel="canonical" href="https://devso3939.github.io/Blue-Ocean/">
+<script>
+/*
+ * Bare-root auth redirector (Blue Ocean).
+ *
+ * Why this exists: Supabase bakes the redirect target into auth emails at
+ * SEND time from whatever page requested the email. Requests made from a
+ * stale tab at the bare domain bake redirect_to=https://devso3939.github.io/
+ * and GoTrue honors it (same host as the Site URL), so the email link lands
+ * HERE instead of on the app — a GitHub Pages 404 with the session token
+ * stranded in the URL hash.
+ *
+ * This page forwards the ENTIRE fragment (#access_token=… / #error=…) to the
+ * app so the client can consume the token and finish sign-in.
+ */
+(function () {
+  var APP = 'https://devso3939.github.io/Blue-Ocean/';
+  var h = location.hash || '';
+  var dest = h ? APP + h : APP;
+  try { history.replaceState(null, '', dest); } catch (e) { /* older browsers */ }
+  location.replace(dest);
+})();
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=https://devso3939.github.io/Blue-Ocean/"></noscript>
+<style>
+  body { font-family: system-ui, sans-serif; background: #0b1d33; color: #e8f0fa;
+         display: flex; min-height: 100vh; align-items: center; justify-content: center; margin: 0; }
+  a { color: #7cc4ff; }
+</style>
+</head>
+<body>
+<main>
+  <p>Redirecting to Blue Ocean…</p>
+  <p><a href="https://devso3939.github.io/Blue-Ocean/">Click here if nothing happens</a></p>
+</main>
+</body>
+</html>
