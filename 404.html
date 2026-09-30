@@ -4,13 +4,11 @@
 <meta charset="utf-8">
 <title>Blue Ocean — redirecting…</title>
 <script>
-/* Same forwarder as index.html, for any missed deep path on the bare root. */
+/* Same forwarder as index.html (no replaceState — see its comment), for any
+ * missed deep path on the bare root. */
 (function () {
   var APP = 'https://devso3939.github.io/Blue-Ocean/';
-  var h = location.hash || '';
-  var dest = h ? APP + h : APP;
-  try { history.replaceState(null, '', dest); } catch (e) { /* older browsers */ }
-  location.replace(dest);
+  location.replace(APP + (location.hash || ''));
 })();
 </script>
 <noscript><meta http-equiv="refresh" content="0; url=https://devso3939.github.io/Blue-Ocean/"></noscript>

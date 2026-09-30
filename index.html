@@ -17,13 +17,14 @@
  *
  * This page forwards the ENTIRE fragment (#access_token=… / #error=…) to the
  * app so the client can consume the token and finish sign-in.
+ *
+ * NOTE: no history.replaceState here — rewriting the URL first would make the
+ * following location.replace() a same-document no-op and strand the user on
+ * this page (observed in the field on 2026-09-30).
  */
 (function () {
   var APP = 'https://devso3939.github.io/Blue-Ocean/';
-  var h = location.hash || '';
-  var dest = h ? APP + h : APP;
-  try { history.replaceState(null, '', dest); } catch (e) { /* older browsers */ }
-  location.replace(dest);
+  location.replace(APP + (location.hash || ''));
 })();
 </script>
 <noscript><meta http-equiv="refresh" content="0; url=https://devso3939.github.io/Blue-Ocean/"></noscript>
